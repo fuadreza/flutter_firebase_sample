@@ -1,5 +1,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 abstract class BaseAuth {
 
@@ -7,10 +8,18 @@ abstract class BaseAuth {
   Future<String> signIn(String email, String password);
   Future<String> createUser(String email, String password);
   Future<void> signOut();
+  Future<void> initializeApp();
+
 }
 
 class Auth implements BaseAuth{
+
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  @override
+  Future<Function> initializeApp() {
+    Firebase.initializeApp();
+  }
 
   @override
   Future<String> signIn(String email, String password) async{
